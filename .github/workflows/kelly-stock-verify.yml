@@ -1,0 +1,58 @@
+name: Kelly stock public delivery check
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/kelly-stock-verify.yml']
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public delivery hashes without credentials
+        run: |
+          python3 - <<'PY'
+          import datetime, hashlib, json, pathlib, urllib.request
+          root=pathlib.Path('kelly-stock-lab')
+          base='https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/'
+          checks=[]
+          for name in ['index.html','style.css','engine.js','app.js','prices.js']:
+              item={'file':name,'url':base+name}
+              try:
+                  req=urllib.request.Request(base+name,headers={'User-Agent':'Mozilla/5.0'})
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      body=response.read(2000000)
+                      item.update(status=response.status,content_type=response.headers.get('Content-Type'),final_url=response.url)
+                  item['bytes']=len(body)
+                  item['matches_repository']=hashlib.sha256(body).hexdigest()==hashlib.sha256((root/name).read_bytes()).hexdigest()
+                  if name=='index.html': item['contains_app_title']='켈리 스톡 랩'.encode() in body
+              except Exception as e: item['error']=str(e)
+              checks.append(item)
+          report={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'HTTPS byte delivery only. Not a physical iPhone or Safari test.','checks':checks}
+          (root/'deployment-check.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Mathematical smoke checks
+        run: |
+          node - <<'JS'
+          const assert=require('node:assert/strict');
+          const E=require('./kelly-stock-lab/engine.js');
+          assert.ok(Math.abs(E.kelly([1,-.6])-1/3)<1e-9);
+          assert.equal(E.kelly([1,-1]),0);
+          const d=require('./kelly-stock-lab/prices.json');
+          for(const s of d.stocks) assert.equal(E.validate(s.rows).length,s.row_count);
+          console.log('Kelly formula and packaged market rows verified.');
+          JS
+      - name: Save delivery report
+        run: |
+          git config user.name "Kelly Stock Lab"
+          git config user.email "kelly-stock-lab@users.noreply.github.com"
+          git add kelly-stock-lab/deployment-check.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record public delivery check, separate from mobile UI QA"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
