@@ -19,17 +19,19 @@ jobs:
         run: |
           git config user.name "Kelly Stock Lab"
           git config user.email "kelly-stock-lab@users.noreply.github.com"
-          git add kelly-stock-lab/prices.json kelly-stock-lab/data-status.json
+          git add kelly-stock-lab/prices.json kelly-stock-lab/prices.js kelly-stock-lab/data-status.json
           if ! git diff --cached --quiet; then
-            git commit -m "Update verified daily price snapshot (not real time)"
+            git commit -m "Update validated daily price snapshot (not real time)"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: kelly-stock-source-audit
           path: |
             kelly-stock-lab/prices.json
+            kelly-stock-lab/prices.js
             kelly-stock-lab/data-status.json
             kelly-stock-lab/source-audit/
           retention-days: 7
