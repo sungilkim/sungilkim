@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "fetched_at": "2026-09-28T20:53:57.476977+09:00",
+  "cutoff": "2026-09-27",
+  "provider": "네이버 증권 차트 일봉",
+  "realtime": false,
+  "adjustment": "공급자 차트 가격. 수정주가·권리변동 독립 검증 없음. 배당 제외.",
+  "errors": [],
+  "stocks": [
+    {
+      "code": "005930",
+      "name": "삼성전자",
+      "source_url": "https://fchart.stock.naver.com/sise.nhn?symbol=005930&timeframe=day&count=1700&requestType=0",
+      "sha256": "8ec2bce6506482f7e0f5f1559229aafca675f9d80a7492894b0f3e6fc8e81cab",
+      "first_date": "2021-01-04",
+      "last_date": "2026-09-23",
+      "row_count": 1404
+    },
+    {
+      "code": "000660",
+      "name": "SK하이닉스",
+      "source_url": "https://fchart.stock.naver.com/sise.nhn?symbol=000660&timeframe=day&count=1700&requestType=0",
+      "sha256": "e3fc2a79b584edd929757d5b0d401eaff59c206db851e265cc1ae896e03e149e",
+      "first_date": "2021-01-04",
+      "last_date": "2026-09-23",
+      "row_count": 1404
+    },
+    {
+      "code": "035420",
+      "name": "NAVER",
+      "source_url": "https://fchart.stock.naver.com/sise.nhn?symbol=035420&timeframe=day&count=1700&requestType=0",
+      "sha256": "350ccb06db106fe2a76d147183138b281ab56364b5eed58b083250861b647ff7",
+      "first_date": "2021-01-04",
+      "last_date": "2026-09-23",
+      "row_count": 1404
+    }
+  ]
+}
