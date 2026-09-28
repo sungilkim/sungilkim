@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-09-28T12:10:34.362674+00:00",
+  "scope": "HTTPS byte delivery only. Not a physical iPhone or Safari test.",
+  "checks": [
+    {
+      "file": "index.html",
+      "url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/index.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/index.html",
+      "bytes": 15733,
+      "matches_repository": true,
+      "contains_app_title": true
+    },
+    {
+      "file": "style.css",
+      "url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/style.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8",
+      "final_url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/style.css",
+      "bytes": 8610,
+      "matches_repository": true
+    },
+    {
+      "file": "engine.js",
+      "url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/engine.js",
+      "status": 200,
+      "content_type": "application/javascript; charset=utf-8",
+      "final_url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/engine.js",
+      "bytes": 7053,
+      "matches_repository": true
+    },
+    {
+      "file": "app.js",
+      "url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/app.js",
+      "status": 200,
+      "content_type": "application/javascript; charset=utf-8",
+      "final_url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/app.js",
+      "bytes": 16116,
+      "matches_repository": true
+    },
+    {
+      "file": "prices.js",
+      "url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/prices.js",
+      "status": 200,
+      "content_type": "application/javascript; charset=utf-8",
+      "final_url": "https://raw.githack.com/sungilkim/sungilkim/main/kelly-stock-lab/prices.js",
+      "bytes": 211031,
+      "matches_repository": true
+    }
+  ]
+}
