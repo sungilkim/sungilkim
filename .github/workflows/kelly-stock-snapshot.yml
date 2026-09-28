@@ -1,0 +1,35 @@
+name: Kelly stock historical snapshot
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/kelly-stock-snapshot.yml'
+permissions:
+  contents: write
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve and validate public price rows
+        run: python3 kelly-stock-lab/fetch_prices.py
+      - name: Commit only validated market snapshot
+        run: |
+          git config user.name "Kelly Stock Lab"
+          git config user.email "kelly-stock-lab@users.noreply.github.com"
+          git add kelly-stock-lab/prices.json kelly-stock-lab/data-status.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update verified daily price snapshot (not real time)"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kelly-stock-source-audit
+          path: |
+            kelly-stock-lab/prices.json
+            kelly-stock-lab/data-status.json
+            kelly-stock-lab/source-audit/
+          retention-days: 7
